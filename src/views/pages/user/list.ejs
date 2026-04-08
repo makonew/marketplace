@@ -1,0 +1,10 @@
+<h1>Users</h1>
+<ul>
+    <% users.forEach(user => { %>
+        <li>
+            <a href="/users/<%= user.id %>/items"><%= user.login %></a> 
+            (Money: $<%= user.money %>)
+        </li>
+    <% }) %>
+</ul>
+<a href="/">Back to Home</a>

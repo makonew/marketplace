@@ -1,0 +1,12 @@
+<h2>Lista wizyt</h2>
+
+<ul>
+    <% visits.forEach(v => { &>
+        <li>
+            <strong><%= v.patientName %></strong> <br>
+            PESEL: <%= v.pesel %> <br>
+            Data: <%= new Date(v.date).toLocaleDateString() %> <br>
+            Notatka: <%= v.note %> <br>
+        </li>
+    <% }); %>
+</ul>

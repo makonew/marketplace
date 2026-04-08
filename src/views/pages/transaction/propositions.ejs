@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Propozycje wymiany</title>
+</head>
+<body>
+    <h1>Propozycje wymiany</h1>
+    
+    <h2>Moje oferty (wysłane)</h2>
+    <% const sentOffers = propositions.filter(p => p.proposition_type === 'offer_sent'); %>
+    <% if (sentOffers.length === 0) { %>
+        <p>Nie wysłałeś żadnych ofert.</p>
+    <% } else { %>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Przedmiot</th>
+                    <th>Sprzedający</th>
+                    <th>Cena</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% sentOffers.forEach(offer => { %>
+                    <tr>
+                        <td><%= offer.item_name %></td>
+                        <td><%= offer.seller_name %></td>
+                        <td><%= offer.price %> zł</td>
+                        <td>
+                            <% if (offer.approved) { %>
+                                ✓ Zaakceptowana
+                            <% } else { %>
+                                Oczekuje na akceptację
+                            <% } %>
+                        </td>
+                    </tr>
+                <% }); %>
+            </tbody>
+        </table>
+    <% } %>
+
+    <h2>Oferty otrzymane</h2>
+    <% const receivedOffers = propositions.filter(p => p.proposition_type === 'offer_received'); %>
+    <% if (receivedOffers.length === 0) { %>
+        <p>Nie otrzymałeś żadnych ofert.</p>
+    <% } else { %>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Przedmiot</th>
+                    <th>Kupujący</th>
+                    <th>Cena</th>
+                    <th>Status</th>
+                    <th>Akcja</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% receivedOffers.forEach(offer => { %>
+                    <tr>
+                        <td><%= offer.item_name %></td>
+                        <td><%= offer.buyer_name %></td>
+                        <td><%= offer.price %> zł</td>
+                        <td>
+                            <% if (offer.approved) { %>
+                                ✓ Zaakceptowana
+                            <% } else { %>
+                                Oczekuje na akceptację
+                            <% } %>
+                        </td>
+                        <td>
+                            <% if (!offer.approved) { %>
+                                <form action="/transactions/<%= offer.id %>/approve" method="POST" style="display:inline;">
+                                    <input type="hidden" name="seller_id" value="<%= offer.seller_id %>">
+                                    <button type="submit">Akceptuj</button>
+                                </form>
+                                <form action="/transactions/<%= offer.id %>/commit" method="POST" style="display:inline;">
+                                    <button type="submit">Zatwierdź wymianę</button>
+                                </form>
+                            <% } else { %>
+                                <form action="/transactions/<%= offer.id %>/commit" method="POST" style="display:inline;">
+                                    <button type="submit">Zatwierdź wymianę</button>
+                                </form>
+                            <% } %>
+                        </td>
+                    </tr>
+                <% }); %>
+            </tbody>
+        </table>
+    <% } %>
+
+    <a href="/">Powrót do strony głównej</a>
+</body>
+</html>

@@ -1,0 +1,29 @@
+{
+  "name": "marketplace",
+  "version": "1.0.0",
+  "main": "app.js",
+  "scripts": {
+    "start": "node src/app.js",
+    "dev": "nodemon src/app.js",
+    "seed": "node src/seed.js",
+    "key": "node -e \"console.log(require('crypto').randomBytes(32).toString('hex'))\"",
+    "salt": "node -e \"console.log(require('crypto').randomBytes(16).toString('hex'))\""
+  },
+  "keywords": [],
+  "author": "Michał Paryż",
+  "license": "MIT",
+  "description": "",
+  "dependencies": {
+    "dotenv": "^17.2.3",
+    "ejs": "^4.0.1",
+    "express": "^5.2.1",
+    "express-ejs-layouts": "^2.5.1",
+    "express-session": "^1.19.0",
+    "mongodb": "^7.0.0",
+    "mysql": "^2.18.1",
+    "mysql2": "^3.20.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.11"
+  }
+}

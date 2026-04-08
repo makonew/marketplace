@@ -1,0 +1,10 @@
+<h1>Items</h1>
+<ul>
+    <% items.forEach(item => { %>
+        <li>
+            <%= item.name %> 
+            (<a href="/items/<%= item.id %>/owners">View Owners</a>)
+        </li>
+    <% }) %>
+</ul>
+<a href="/">Back to Home</a>

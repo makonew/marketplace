@@ -1,0 +1,42 @@
+<h1>Create Transaction</h1>
+<form method="POST" action="/transactions">
+    <label for="item_id">
+        Item (Owner)
+        <select name="item_id" id="item_id" required>
+            <option value="">Select an item</option>
+            <% items.forEach(item => { %>
+                <option value="<%= item.item_id %>">
+                    <%= item.item_name %> (Owned by: <%= item.owner_name %>)
+                </option>
+            <% }) %>
+        </select>
+    </label>
+
+    <label for="buyer_id">
+        Buyer
+        <select name="buyer_id" id="buyer_id" required>
+            <option value="">Select a buyer</option>
+            <% users.forEach(user => { %>
+                <option value="<%= user.id %>"><%= user.login %></option>
+            <% }) %>
+        </select>
+    </label>
+
+    <label for="seller_id">
+        Seller
+        <select name="seller_id" id="seller_id" required>
+            <option value="">Select a seller</option>
+            <% users.forEach(user => { %>
+                <option value="<%= user.id %>"><%= user.login %></option>
+            <% }) %>
+        </select>
+    </label>
+
+    <label for="price">
+        Price
+        <input type="number" name="price" id="price" step="0.01" min="0" required>
+    </label>
+
+    <button type="submit">Create Transaction</button>
+</form>
+<a href="/transactions">Back to Transactions</a>

@@ -1,0 +1,14 @@
+<h1>Items owned by: <%= user.login %></h1>
+<% if (items.length > 0) { %>
+    <ul>
+        <% items.forEach(item => { %>
+            <li>
+                <%= item.name %> 
+                (<a href="/items/<%= item.id %>/owners">View All Owners</a>)
+            </li>
+        <% }) %>
+    </ul>
+<% } else { %>
+    <p>No items found</p>
+<% } %>
+<a href="/users">Back to Users</a>
