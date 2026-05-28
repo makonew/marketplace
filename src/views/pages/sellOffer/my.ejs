@@ -1,0 +1,38 @@
+<h1>My Offers</h1>
+<a href="/offers/new">Create New Offer</a>
+<a href="/offers">Browse Offers</a>
+
+<% if (offers.length === 0) { %>
+    <p>You have no offers.</p>
+<% } else { %>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Item</th>
+                <th>Price</th>
+                <th>Status</th>
+                <th>Date</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% offers.forEach(o => { %>
+                <tr>
+                    <td><%= o.item_name %></td>
+                    <td><%= parseFloat(o.price).toFixed(2) %></td>
+                    <td><%= o.status %></td>
+                    <td><%= o.created_at %></td>
+                    <td>
+                        <% if (o.status === 'active') { %>
+                            <form method="POST" action="/offers/<%= o.id %>/cancel" style="display:inline">
+                                <button type="submit">Cancel</button>
+                            </form>
+                        <% } %>
+                    </td>
+                </tr>
+            <% }); %>
+        </tbody>
+    </table>
+<% } %>
+
+<a href="/">Back</a>

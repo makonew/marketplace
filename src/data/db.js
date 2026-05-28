@@ -3,7 +3,7 @@ const mysql = require('mysql2');
 
 let conn;
 
-function connectDB() {
+function connectDB(callback) {
     conn = mysql.createConnection({
         host: process.env.DB_HOST || 'localhost',
         user: process.env.DB_USER || 'root',
@@ -18,6 +18,7 @@ function connectDB() {
             return;
         }
         console.log('Connected to MySQL database');
+        if (callback) callback();
     });
 }
 
@@ -26,44 +27,3 @@ function getConnection() {
 }
 
 module.exports = { connectDB, getConnection };
-
-
-/*
-=============================
-Users
-============================
- id | login | password | money
------------------------
-
-*/
-
-/* 
-=================
-Items
-=================
-id | name
-------------------
-
-
-=================
-ItemOwners
-==================
-id | owner_id | item_id
-
-
-==================
-Transactions
-=====================
-id | item_ | buyer | seller | price/value | approved
-
-=================
-Offers
-=================
-id | offerer_id | offered_id
-
-===============
-OfferItems
-===============
-id | offer_id | offerer/offered 
-
-*/

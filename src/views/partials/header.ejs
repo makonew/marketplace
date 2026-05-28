@@ -3,10 +3,10 @@
   <nav>
     <a href="/items">Items</a>
     <a href="/users">Users</a>
-    <a href="/transactions">Transactions</a>
+    <a href="/trades">Trades</a>
+    <a href="/offers">Sell Offers</a>
     <% if(session.user){ %>
     <span>Witaj, <%= session.user.login %></span>
-    <a href="/transactions/propositions">Propozycje</a>
     <a href="/auth/logout">Wyloguj</a>
     <% } else {%>
     <a href="/auth/login">Logowanie</a>

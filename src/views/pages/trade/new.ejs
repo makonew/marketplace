@@ -1,0 +1,55 @@
+<h1>New Trade</h1>
+
+<form method="GET" action="/trades/new">
+    <label>User to trade with:
+        <select name="target" onchange="this.form.submit()">
+            <option value="">-- Select --</option>
+            <% users.forEach(u => { %>
+                <option value="<%= u.id %>" <%= targetId === u.id ? 'selected' : '' %>><%= u.login %></option>
+            <% }); %>
+        </select>
+    </label>
+</form>
+
+<% if (targetId) { %>
+    <hr>
+    <h2>Trade with <%= targetName %></h2>
+    <form method="POST" action="/trades">
+        <input type="hidden" name="target_id" value="<%= targetId %>">
+
+        <h3>Items I give</h3>
+        <% if (myItems.length === 0) { %>
+            <p>You have no items.</p>
+        <% } else { %>
+            <% myItems.forEach(item => { %>
+                <label>
+                    <input type="checkbox" name="creator_items" value="<%= item.id %>">
+                    <%= item.name %>
+                </label><br>
+            <% }); %>
+        <% } %>
+
+        <h3>Money I give</h3>
+        <input type="number" name="creator_money" step="0.01" min="0" value="0" placeholder="0.00">
+
+        <h3>Items I want from <%= targetName %></h3>
+        <% if (targetItems.length === 0) { %>
+            <p><%= targetName %> has no items.</p>
+        <% } else { %>
+            <% targetItems.forEach(item => { %>
+                <label>
+                    <input type="checkbox" name="target_items" value="<%= item.id %>">
+                    <%= item.name %>
+                </label><br>
+            <% }); %>
+        <% } %>
+
+        <h3>Money I want from <%= targetName %></h3>
+        <input type="number" name="target_money" step="0.01" min="0" value="0" placeholder="0.00">
+
+        <br><br>
+        <button type="submit">Send Trade Offer</button>
+    </form>
+<% } %>
+
+<a href="/trades">Back</a>

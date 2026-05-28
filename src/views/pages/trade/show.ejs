@@ -1,0 +1,48 @@
+<h1>Trade #<%= trade.id %></h1>
+
+<p>Status: <strong><%= trade.status %></strong></p>
+<p>Creator: <strong><%= trade.creator_id === userId ? 'You' : ('User #' + trade.creator_id) %></strong></p>
+<p>Target: <strong><%= trade.target_id === userId ? 'You' : ('User #' + trade.target_id) %></strong></p>
+
+<h2>Items given by Creator</h2>
+<% const creatorItems = trade.items.filter(i => i.giver_id === trade.creator_id); %>
+<% if (creatorItems.length === 0) { %>
+    <p>No items.</p>
+<% } else { %>
+    <ul>
+        <% creatorItems.forEach(item => { %>
+            <li><%= item.item_name %></li>
+        <% }); %>
+    </ul>
+<% } %>
+
+<h2>Money given by Creator</h2>
+<p><%= parseFloat(trade.creator_money).toFixed(2) %></p>
+
+<h2>Items given by Target</h2>
+<% const targetItems = trade.items.filter(i => i.giver_id === trade.target_id); %>
+<% if (targetItems.length === 0) { %>
+    <p>No items.</p>
+<% } else { %>
+    <ul>
+        <% targetItems.forEach(item => { %>
+            <li><%= item.item_name %></li>
+        <% }); %>
+    </ul>
+<% } %>
+
+<h2>Money given by Target</h2>
+<p><%= parseFloat(trade.target_money).toFixed(2) %></p>
+
+<% if (trade.status === 'pending' && trade.target_id === userId) { %>
+    <form action="/trades/<%= trade.id %>/accept" method="POST" style="display:inline;">
+        <button type="submit">Accept Trade</button>
+    </form>
+    <form action="/trades/<%= trade.id %>/reject" method="POST" style="display:inline;">
+        <button type="submit">Reject Trade</button>
+    </form>
+<% } else if (trade.status === 'pending') { %>
+    <p><em>Waiting for recipient to accept/reject.</em></p>
+<% } %>
+
+<a href="/trades">Back</a>

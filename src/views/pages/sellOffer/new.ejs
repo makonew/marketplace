@@ -1,0 +1,23 @@
+<h1>Create Sell Offer</h1>
+
+<form method="POST" action="/offers">
+    <h3>Item to sell</h3>
+    <% if (items.length === 0) { %>
+        <p>You have no items to sell.</p>
+    <% } else { %>
+        <select name="item_id" required>
+            <option value="">-- Select Item --</option>
+            <% items.forEach(item => { %>
+                <option value="<%= item.id %>"><%= item.name %></option>
+            <% }); %>
+        </select>
+    <% } %>
+
+    <h3>Price</h3>
+    <input type="number" name="price" step="0.01" min="0.01" placeholder="0.00" required>
+
+    <br><br>
+    <button type="submit">Create Offer</button>
+</form>
+
+<a href="/offers">Back</a>

@@ -1,0 +1,78 @@
+<h1>Trades</h1>
+<a href="/trades/new">New Trade</a>
+
+<% const received = trades.filter(t => t.target_id === userId && t.status === 'pending'); %>
+<% const sent = trades.filter(t => t.creator_id === userId && t.status === 'pending'); %>
+<% const completed = trades.filter(t => t.status !== 'pending'); %>
+
+<% if (received.length > 0) { %>
+    <h2>Offers received</h2>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>From</th>
+                <th>Date</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% received.forEach(t => { %>
+                <tr>
+                    <td><%= t.creator_name %></td>
+                    <td><%= t.created_at %></td>
+                    <td><a href="/trades/<%= t.id %>">View & respond</a></td>
+                </tr>
+            <% }); %>
+        </tbody>
+    </table>
+<% } %>
+
+<% if (sent.length > 0) { %>
+    <h2>Offers sent</h2>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>To</th>
+                <th>Date</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% sent.forEach(t => { %>
+                <tr>
+                    <td><%= t.target_name %></td>
+                    <td><%= t.created_at %></td>
+                    <td><a href="/trades/<%= t.id %>">View</a></td>
+                </tr>
+            <% }); %>
+        </tbody>
+    </table>
+<% } %>
+
+<% if (received.length === 0 && sent.length === 0 && completed.length === 0) { %>
+    <p>No trades yet.</p>
+<% } %>
+
+<% if (completed.length > 0) { %>
+    <h2>Completed</h2>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Partner</th>
+                <th>Status</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% completed.forEach(t => { %>
+                <tr>
+                    <td><%= t.creator_id === userId ? t.target_name : t.creator_name %></td>
+                    <td><%= t.status %></td>
+                    <td><%= t.created_at %></td>
+                </tr>
+            <% }); %>
+        </tbody>
+    </table>
+<% } %>
+
+<a href="/">Back</a>
